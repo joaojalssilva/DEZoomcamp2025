@@ -1,0 +1,82 @@
+##Homework 1
+#Question 1
+docker run -it --entrypoint bash python:3.12.8
+pip --version
+
+#Question 3
+
+SELECT COUNT(*) AS trip_count
+FROM green_taxi_data
+WHERE lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND lpep_pickup_datetime < '2019-11-01 00:00:00'
+AND lpep_dropoff_datetime >= '2019-10-01 00:00:00'
+AND lpep_dropoff_datetime < '2019-11-01 00:00:00'
+AND trip_distance <= 1.0;
+
+SELECT COUNT(*) AS trip_count
+FROM green_taxi_data
+WHERE lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND lpep_pickup_datetime < '2019-11-01 00:00:00'
+AND lpep_dropoff_datetime >= '2019-10-01 00:00:00'
+AND lpep_dropoff_datetime < '2019-11-01 00:00:00'
+AND trip_distance > 1.0
+AND trip_distance <= 3.0;
+
+SELECT COUNT(*) AS trip_count
+FROM green_taxi_data
+WHERE lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND lpep_pickup_datetime < '2019-11-01 00:00:00'
+AND lpep_dropoff_datetime >= '2019-10-01 00:00:00'
+AND lpep_dropoff_datetime < '2019-11-01 00:00:00'
+AND trip_distance > 3.0
+AND trip_distance <= 7.0;
+
+SELECT COUNT(*) AS trip_count
+FROM green_taxi_data
+WHERE lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND lpep_pickup_datetime < '2019-11-01 00:00:00'
+AND lpep_dropoff_datetime >= '2019-10-01 00:00:00'
+AND lpep_dropoff_datetime < '2019-11-01 00:00:00'
+AND trip_distance > 7.0
+AND trip_distance <= 10.0;
+
+SELECT COUNT(*) AS trip_count
+FROM green_taxi_data
+WHERE lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND lpep_pickup_datetime < '2019-11-01 00:00:00'
+AND lpep_dropoff_datetime >= '2019-10-01 00:00:00'
+AND lpep_dropoff_datetime < '2019-11-01 00:00:00'
+AND trip_distance > 10.0
+
+#Question 4
+SELECT 
+    DATE(lpep_pickup_datetime) AS pickup_day,
+    MAX(trip_distance) AS longest_trip_distance
+FROM 
+    green_taxi_data
+GROUP BY 
+    DATE(lpep_pickup_datetime)
+ORDER BY 
+    longest_trip_distance DESC
+
+
+#Question 5
+
+#Question 6
+SELECT 
+	z_drop."Zone" AS dropoff_zone,
+	max(tip_amount) AS largest_tip
+FROM 
+    green_taxi_data g
+JOIN zones z_pickup ON g."PULocationID" = z_pickup."LocationID"
+JOIN zones z_drop  ON g."DOLocationID" = z_drop."LocationID"
+WHERE 
+    z_pickup."Zone" = 'East Harlem North'
+AND 
+	g.lpep_pickup_datetime >= '2019-10-01 00:00:00'
+AND 
+	g.lpep_pickup_datetime < '2019-11-01 00:00:00'
+GROUP BY
+	dropoff_zone
+ORDER BY  
+	largest_tip DESC
