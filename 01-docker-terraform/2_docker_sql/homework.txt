@@ -61,6 +61,22 @@ ORDER BY
 
 
 #Question 5
+SELECT 
+    z.Zone AS pickup_location,
+    SUM(g.total_amount) AS total_amount
+FROM 
+    green_taxi_data g
+JOIN 
+    zones z
+    ON g.PULocationID = z.LocationID
+WHERE 
+    DATE(g.tpep_pickup_datetime) = '2019-10-18'
+GROUP BY 
+    z.Zone
+HAVING 
+    SUM(g.total_amount) > 13000
+ORDER BY 
+    total_amount DESC;
 
 #Question 6
 SELECT 
