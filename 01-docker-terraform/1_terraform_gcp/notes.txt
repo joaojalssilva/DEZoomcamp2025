@@ -1,0 +1,12 @@
+###Used Commands
+
+##DE Zoomcamp 1.3.2
+export GOOGLE_CREDENTIALS='path to your credentials file'
+
+terraform init
+
+terraform plan
+
+terraform apply
+
+terraform destroy
