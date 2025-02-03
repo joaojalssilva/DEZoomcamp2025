@@ -1,0 +1,13 @@
+##Homework 1
+
+#Question 3
+SELECT count(*) FROM `jals-dezoomcamp.zoomcamp.yellow_tripdata` 
+WHERE filename LIKE '%2020%';
+
+#Question 4
+SELECT count(*) FROM `jals-dezoomcamp.zoomcamp.green_tripdata` 
+WHERE filename LIKE '%2020%';
+
+#Question 5
+SELECT count(*) FROM `jals-dezoomcamp.zoomcamp.yellow_tripdata` 
+WHERE filename LIKE '%2021-03%';
