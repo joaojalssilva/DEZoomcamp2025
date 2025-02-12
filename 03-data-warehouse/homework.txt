@@ -1,0 +1,46 @@
+##Homework 3
+#Setup
+CREATE OR REPLACE EXTERNAL TABLE `jalsdezoomcamp.dezoomcamp_hw3_2025.external_yellow_2024`
+OPTIONS(
+  FORMAT='PARQUET',
+  URIS=['gs://dezoomcamp_hw3_2025/*']
+)
+
+CREATE OR REPLACE TABLE `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+AS(
+  SELECT * FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.external_yellow_2024`
+)
+
+#Question 1
+SELECT count(*) FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`;
+
+#Question 2
+SELECT count(distinct PULocationID) FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+
+SELECT count(distinct PULocationID) FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.external_yellow_2024`
+
+#Question 3
+SELECT PULocationID FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+
+SELECT PULocationID, DOLocationID FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+
+#Question 4
+SELECT count(fare_amount)  FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+WHERE fare_amount = 0 ;
+
+#Qeustion 5
+CREATE OR REPLACE TABLE `jalsdezoomcamp.dezoomcamp_hw3_2025.partitioned_yellow_2024`
+PARTITION BY DATE(tpep_dropoff_datetime)
+CLUSTER BY VendorID
+AS(
+  SELECT * FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+)
+
+#Question 6
+SELECT distinct VendorID FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.yellow_2024`
+WHERE tpep_dropoff_datetime >= '2024-03-01'
+AND tpep_dropoff_datetime <= '2024-03-15';
+
+SELECT distinct VendorID FROM `jalsdezoomcamp.dezoomcamp_hw3_2025.partitioned_yellow_2024`
+WHERE tpep_dropoff_datetime >= '2024-03-01'
+AND tpep_dropoff_datetime <= '2024-03-15';
