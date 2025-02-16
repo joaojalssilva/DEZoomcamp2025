@@ -1,0 +1,16 @@
+##Homework 3
+#Question 3
+df = pipeline.dataset(dataset_type="default").rides.df()
+df.info()
+
+#Question 4
+with pipeline.sql_client() as client:
+    res = client.execute_sql(
+            """
+            SELECT
+            AVG(date_diff('minute', trip_pickup_date_time, trip_dropoff_date_time))
+            FROM rides;
+            """
+        )
+    # Prints column values of the first row
+    print(res)
