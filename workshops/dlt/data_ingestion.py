@@ -9,7 +9,7 @@ import duckdb
 @dlt.resource(name="rides") 
 def ny_taxi():
     client = RESTClient(
-        base_url="https://europe-west1-dlthub-analytics.cloudfunctions.net",
+        base_url="https://us-central1-dlthub-analytics.cloudfunctions.net",
         paginator=PageNumberPaginator(
             base_page=1,
             total_path=None
