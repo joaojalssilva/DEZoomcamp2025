@@ -43,5 +43,7 @@ terraform.rc
 *.db
 
 05-batch/code/data/
+05-batch/code/zones/
+05-batch/code/tmp/
 
 *.ipynb_checkpoints
