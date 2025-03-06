@@ -1,0 +1,41 @@
+##Homework 5
+#Question 2
+import pyspark
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.master("local[*]").appName('test').getOrCreate()
+
+df = spark.read.parquet('yellow_tripdata_2024-10.parquet')
+df = df.repartition(4)
+df.write.parquet('homework/2')
+
+#Question 3
+df.registerTempTable('trips_data')  
+
+spark.sql("""
+
+SELECT count(1) FROM trips_data 
+WHERE DATE(tpep_pickup_datetime) = '2024-10-15';
+""").show()
+
+#Question 4
+spark.sql("""
+SELECT 
+    (unix_timestamp(tpep_dropoff_datetime) - unix_timestamp(tpep_pickup_datetime)) / 3600 AS trip_duration
+FROM trips_data
+ORDER BY trip_duration DESC
+LIMIT 5;
+""").show() 
+
+#Question 6
+lookup_df = spark.read.option("header", "true").csv('taxi_zone_lookup.csv')
+
+lookup_df.registerTempTable('lookup')  
+
+spark.sql("""
+
+SELECT lookup.Zone , count(1) as num_trips FROM trips_data 
+INNER JOIN lookup ON lookup.LocationID = trips_data.PULocationID
+GROUP BY lookup.Zone
+ORDER BY num_trips ASC;
+""").show() 
