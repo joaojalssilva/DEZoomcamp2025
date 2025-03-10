@@ -22,6 +22,7 @@ output = args.output
 
 
 spark = SparkSession.builder \
+    .master("spark://codespaces-21030e:7077") \
     .appName('test') \
     .getOrCreate()
 
